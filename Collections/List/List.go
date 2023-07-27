@@ -1,4 +1,4 @@
-package Collections
+package List
 
 import (
 	"slices"
@@ -14,8 +14,8 @@ type List[T any] struct {
 	_ilist *InternalList[T]
 }
 
-// NewList creates new instance of List.
-func NewList[T any]() List[T] {
+// New creates new instance of List.
+func New[T any]() List[T] {
 	ilist := &InternalList[T]{
 		_arr: []T{},
 	}
@@ -128,14 +128,14 @@ func (list List[T]) RemoveRange(index int, count int) {
 
 // GetRange returns new list with elements specified by range.
 func (list List[T]) GetRange(index int, count int) List[T] {
-	newList := NewList[T]()
+	newList := New[T]()
 	newList.AddRange(list._ilist._arr[index : index+count])
 	return newList
 }
 
 // Clone returns new instance of the list.
 func (list List[T]) Clone() List[T] {
-	newList := NewList[T]()
+	newList := New[T]()
 	newList.AddRange(list._ilist._arr[:])
 	return newList
 }

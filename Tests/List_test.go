@@ -3,17 +3,17 @@ package Tests_test
 import (
 	"testing"
 
-	. "github.com/RENCI/GoUtils/Collections"
+	"github.com/RENCI/GoUtils/Collections/List"
 )
 import "github.com/stretchr/testify/assert"
 
 func Test_NewGoList(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	assert.Equal(t, 0, list.Size())
 }
 
 func Test_Add_Get(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.Add(1)
 	list.Add(2)
 	assert.Equal(t, 2, list.Size())
@@ -22,7 +22,7 @@ func Test_Add_Get(t *testing.T) {
 }
 
 func Test_AddRange(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	assert.Equal(t, 5, list.Size())
 	assert.Equal(t, 1, list.Get(0))
@@ -30,14 +30,14 @@ func Test_AddRange(t *testing.T) {
 }
 
 func Test_Clean(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	list.Clear()
 	assert.Equal(t, 0, list.Size())
 }
 
 func Test_Any_Pos(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	res := list.Any(func(item1 int) bool {
 		return item1 == 3
@@ -46,7 +46,7 @@ func Test_Any_Pos(t *testing.T) {
 }
 
 func Test_Has_Neg(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	res := list.Any(func(item1 int) bool {
 		return item1 == 10
@@ -55,7 +55,7 @@ func Test_Has_Neg(t *testing.T) {
 }
 
 func Test_Sort(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{10, 2, 13, 3, 30, 25})
 	list.Sort(func(item1 int, item2 int) int {
 		return item1 - item2
@@ -69,7 +69,7 @@ func Test_Sort(t *testing.T) {
 }
 
 func Test_All_Neg(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	res := list.All(func(item1 int) bool {
 		return item1 == 10
@@ -78,7 +78,7 @@ func Test_All_Neg(t *testing.T) {
 }
 
 func Test_All_Pos(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	res := list.All(func(item1 int) bool {
 		return item1 > 0
@@ -87,7 +87,7 @@ func Test_All_Pos(t *testing.T) {
 }
 
 func Test_ForEach(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	sum := 0
 	list.ForEach(func(item1 int) {
@@ -97,7 +97,7 @@ func Test_ForEach(t *testing.T) {
 }
 
 func Test_ForEachIndexed(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	ints := []int{1, 2, 3, 4, 5}
 	indexes := []int{0, 1, 2, 3, 4}
 	list.AddRange(ints)
@@ -110,7 +110,7 @@ func Test_ForEachIndexed(t *testing.T) {
 }
 
 func Test_IndexOf(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	res := list.IndexOf(func(item1 int) bool {
 		return item1 == 3
@@ -119,7 +119,7 @@ func Test_IndexOf(t *testing.T) {
 }
 
 func Test_IndexOf_neg(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	res := list.IndexOf(func(item1 int) bool {
 		return item1 == 10
@@ -128,7 +128,7 @@ func Test_IndexOf_neg(t *testing.T) {
 }
 
 func Test_IndexOfRange(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	res := list.IndexOfInRange(func(item1 int) bool {
 		return item1 == 3
@@ -137,7 +137,7 @@ func Test_IndexOfRange(t *testing.T) {
 }
 
 func Test_IndexOfRange_neg(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	res := list.IndexOfInRange(func(item1 int) bool {
 		return item1 == 3
@@ -146,7 +146,7 @@ func Test_IndexOfRange_neg(t *testing.T) {
 }
 
 func Test_RemoveAt(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	list.RemoveAt(0)
 	assert.Equal(t, 4, list.Size())
@@ -154,7 +154,7 @@ func Test_RemoveAt(t *testing.T) {
 }
 
 func Test_RemoveRange(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5})
 	list.RemoveRange(1, 2)
 	assert.Equal(t, 3, list.Size())
@@ -163,7 +163,7 @@ func Test_RemoveRange(t *testing.T) {
 }
 
 func Test_GetRange(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0})
 	res := list.GetRange(3, 3)
 	assert.Equal(t, 3, res.Size())
@@ -173,7 +173,7 @@ func Test_GetRange(t *testing.T) {
 }
 
 func Test_GetRange_no_impact_to_original(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0})
 	res := list.GetRange(3, 3)
 	res.Set(0, -1)
@@ -183,7 +183,7 @@ func Test_GetRange_no_impact_to_original(t *testing.T) {
 }
 
 func Test_GetClone(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0})
 	res := list.Clone()
 	assert.Equal(t, 10, res.Size())
@@ -193,7 +193,7 @@ func Test_GetClone(t *testing.T) {
 }
 
 func Test_GetClone_no_impact_to_original(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0})
 	res := list.Clone()
 	list.Set(3, -1)
@@ -204,7 +204,7 @@ func Test_GetClone_no_impact_to_original(t *testing.T) {
 }
 
 func Test_GetSlice_no_impact_to_original(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0})
 	res := list.GetSlice()
 	assert.Equal(t, 10, len(res))
@@ -214,7 +214,7 @@ func Test_GetSlice_no_impact_to_original(t *testing.T) {
 }
 
 func Test_PushPopPeek(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.Push(1)
 	list.Push(2)
 	list.Push(3)
@@ -228,7 +228,7 @@ func Test_PushPopPeek(t *testing.T) {
 }
 
 func Test_EnqueueDequeue(t *testing.T) {
-	list := NewList[int]()
+	list := List.New[int]()
 	list.Enqueue(1)
 	list.Enqueue(2)
 	list.Enqueue(3)
