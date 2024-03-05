@@ -118,12 +118,12 @@ func (list List[T]) IndexOfInRange(f func(item T) bool, startIndex int, endIndex
 
 // RemoveAt removes an element in the list
 func (list List[T]) RemoveAt(index int) {
-	list._ilist._arr = append(list._ilist._arr[:index], list._ilist._arr[index+1:]...)
+	list._ilist._arr = slices.Delete(list._ilist._arr, index, index+1)
 }
 
 // RemoveRange removes specified number of elements in the list starting from index.
 func (list List[T]) RemoveRange(index int, count int) {
-	list._ilist._arr = append(list._ilist._arr[:index], list._ilist._arr[index+count:]...)
+	list._ilist._arr = slices.Delete(list._ilist._arr, index, index+count)
 }
 
 // GetRange returns new list with elements specified by range.
