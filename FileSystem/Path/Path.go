@@ -1,7 +1,8 @@
-package FileSystem
+package Path
 
 import (
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 )
@@ -38,7 +39,7 @@ func IsFile(path string) (bool, error) {
 	return !r, err
 }
 
-func GetDirectoryName(path string) string {
+func GetDirectoryParent(path string) string {
 	path_to_proc := TrimEndingDirectorySeparator(path)
 	pos := strings.LastIndex(path_to_proc, PATH_SEPARATOR)
 	if pos == -1 {
@@ -54,6 +55,10 @@ func TrimEndingDirectorySeparator(path string) string {
 		path_to_proc = path[:len(path)-1]
 	}
 	return path_to_proc
+}
+
+func Combine(p1 ...string) string {
+	return path.Join(p1...)
 }
 
 func GetExtension(path string) string {

@@ -25,6 +25,17 @@ func New[T any]() List[T] {
 	return list
 }
 
+// New creates new instance of List.
+func NewList[T any](size int) List[T] {
+	ilist := &InternalList[T]{
+		_arr: make([]T, size),
+	}
+	list := List[T]{
+		_ilist: ilist,
+	}
+	return list
+}
+
 // Add adds new item.
 func (list List[T]) Add(item T) {
 	list._ilist._arr = append(list._ilist._arr, item)
