@@ -206,3 +206,11 @@ func (list List[T]) Dequeue() T {
 	list.RemoveAt(list.Size() - 1)
 	return res
 }
+
+func (list List[T]) Iterate(foreach func(item T) bool) {
+	for i := 0; i < list.Size(); i++ {
+		if !foreach(list.Get(i)) {
+			return
+		}
+	}
+}
