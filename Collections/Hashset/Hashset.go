@@ -1,11 +1,31 @@
 package Hashset
 
+import Iterable "github.com/RENCI/GoUtils/Collections/Iterable"
+
 type Hashset[K any] struct {
 	_imap *map[interface{}]bool
 }
 
 func New[K any]() *Hashset[K] {
 	return &Hashset[K]{_imap: &map[interface{}]bool{}}
+}
+
+func NewFromSlice[K any](items *[]K) *Hashset[K] {
+	hs := New[K]()
+	for _, i := range *items {
+		hs.Add(i)
+	}
+	return hs
+}
+
+func NewFromIterable[K any](items Iterable.Iterable[K]) *Hashset[K] {
+	hs := New[K]()
+
+	items.Iterate(func(item *K) bool {
+		hs.Add(*item)
+		return true
+	})
+	return hs
 }
 
 func (this *Hashset[K]) Add(item K) {
@@ -43,5 +63,11 @@ func (this *Hashset[K]) Iterate(foreach func(item *K) bool) {
 				return
 			}
 		}
+	}
+}
+
+func (this *Hashset[K]) ExceptWith(other *[]K) {
+	for _, k := range *other {
+		this.Remove(k)
 	}
 }

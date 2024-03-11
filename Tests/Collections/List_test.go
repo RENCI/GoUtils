@@ -7,9 +7,22 @@ import (
 )
 import "github.com/stretchr/testify/assert"
 
-func Test_NewGoList(t *testing.T) {
+func Test_New(t *testing.T) {
 	list := List.New[int]()
 	assert.Equal(t, 0, list.Size())
+}
+
+func Test_NewFromSlice(t *testing.T) {
+	list := List.NewFromSlice[int](&([]int{100, 20, 3}))
+	assert.Equal(t, 3, list.Size())
+}
+
+func Test_NewFromIterable(t *testing.T) {
+	list1 := List.NewFromSlice[int](&([]int{100, 20, 3}))
+	list2 := List.NewFromIterable[int](&list1)
+
+	assert.Equal(t, 3, list1.Size())
+	assert.Equal(t, 3, list2.Size())
 }
 
 func Test_Add_Get(t *testing.T) {

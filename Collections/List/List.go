@@ -1,6 +1,7 @@
 package List
 
 import (
+	"github.com/RENCI/GoUtils/Collections/Iterable"
 	"slices"
 )
 
@@ -22,6 +23,23 @@ func New[T any]() List[T] {
 	list := List[T]{
 		_ilist: ilist,
 	}
+	return list
+}
+
+func NewFromSlice[T any](items *[]T) List[T] {
+	list := New[T]()
+	for _, i := range *items {
+		list.Add(i)
+	}
+	return list
+}
+
+func NewFromIterable[T any](items Iterable.Iterable[T]) List[T] {
+	list := New[T]()
+	items.Iterate(func(item *T) bool {
+		list.Add(*item)
+		return true
+	})
 	return list
 }
 
@@ -207,9 +225,9 @@ func (list List[T]) Dequeue() T {
 	return res
 }
 
-func (list List[T]) Iterate(foreach func(item T) bool) {
+func (list *List[T]) Iterate(foreach func(item *T) bool) {
 	for i := 0; i < list.Size(); i++ {
-		if !foreach(list.Get(i)) {
+		if !foreach(&list._ilist._arr[i]) {
 			return
 		}
 	}

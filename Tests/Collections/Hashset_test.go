@@ -6,9 +6,20 @@ import (
 	"testing"
 )
 
-func Test_NewGoHashset(t *testing.T) {
+func Test_NewHashset(t *testing.T) {
 	hs := Hashset.New[int]()
 	assert.Equal(t, 0, hs.Size())
+}
+
+func Test_NewFromSlice(t *testing.T) {
+	hs := Hashset.NewFromSlice[int](&([]int{100, 20, 3}))
+	assert.Equal(t, 3, hs.Size())
+}
+
+func Test_NewFromIterable(t *testing.T) {
+	hs1 := Hashset.NewFromSlice[int](&([]int{100, 20, 3}))
+	hs2 := Hashset.NewFromIterable[int](hs1)
+	assert.Equal(t, 3, hs2.Size())
 }
 
 func Test_Add_Size_Contains(t *testing.T) {
@@ -50,4 +61,16 @@ func Test_Iterate(t *testing.T) {
 		return true
 	})
 	assert.Equal(t, 123, s)
+}
+
+func Test_ExceptWith(t *testing.T) {
+	hs := Hashset.New[int]()
+	hs.Add(100)
+	hs.Add(20)
+	hs.Add(3)
+
+	hs.ExceptWith(&([]int{100, 3}))
+	assert.Equal(t, 1, hs.Size())
+	assert.True(t, hs.Contains(20))
+
 }
