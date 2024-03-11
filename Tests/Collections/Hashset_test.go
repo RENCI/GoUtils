@@ -74,3 +74,44 @@ func Test_ExceptWith(t *testing.T) {
 	assert.True(t, hs.Contains(20))
 
 }
+
+func Test_IntersectWith(t *testing.T) {
+	hs := Hashset.New[int]()
+	hs.Add(100)
+	hs.Add(20)
+	hs.Add(3)
+
+	hs.IntersectWith(&([]int{100, 3}))
+	assert.Equal(t, 2, hs.Size())
+	assert.True(t, hs.Contains(100))
+	assert.True(t, hs.Contains(3))
+
+}
+
+func Test_UnionWith(t *testing.T) {
+	hs := Hashset.New[int]()
+	hs.Add(100)
+	hs.Add(20)
+	hs.Add(3)
+
+	hs.UnionWith(&([]int{33, 44}))
+	assert.Equal(t, 5, hs.Size())
+	assert.True(t, hs.Contains(33))
+	assert.True(t, hs.Contains(44))
+
+}
+
+func Test_Clone(t *testing.T) {
+	hs1 := Hashset.New[int]()
+	hs1.Add(100)
+	hs1.Add(20)
+	hs1.Add(3)
+
+	hs2 := hs1.Clone()
+	hs2.Add(5)
+	assert.Equal(t, 3, hs1.Size())
+	assert.Equal(t, 4, hs2.Size())
+	assert.False(t, hs1.Contains(5))
+	assert.True(t, hs2.Contains(5))
+
+}

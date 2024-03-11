@@ -1,6 +1,8 @@
 package Hashset
 
-import Iterable "github.com/RENCI/GoUtils/Collections/Iterable"
+import (
+	Iterable "github.com/RENCI/GoUtils/Collections/Interfaces"
+)
 
 type Hashset[K any] struct {
 	_imap *map[interface{}]bool
@@ -70,4 +72,36 @@ func (this *Hashset[K]) ExceptWith(other *[]K) {
 	for _, k := range *other {
 		this.Remove(k)
 	}
+}
+
+func (this *Hashset[K]) IntersectWith(other *[]K) {
+	res := map[interface{}]bool{}
+
+	for _, k := range *other {
+		if this.Contains(k) {
+			res[k] = false
+		}
+	}
+
+	this._imap = &res
+}
+
+func (this *Hashset[K]) UnionWith(other *[]K) {
+	for _, k := range *other {
+		this.Add(k)
+	}
+}
+
+func (this *Hashset[K]) Clone() *Hashset[K] {
+	res := New[K]()
+	res._imap = copyMap(this._imap)
+	return res
+}
+
+func copyMap(m *map[interface{}]bool) *map[interface{}]bool {
+	m2 := make(map[interface{}]bool, len(*m))
+	var id interface{}
+	for id, m2[id] = range *m {
+	}
+	return &m2
 }

@@ -1,7 +1,7 @@
 package List
 
 import (
-	"github.com/RENCI/GoUtils/Collections/Iterable"
+	"github.com/RENCI/GoUtils/Collections/Interfaces"
 	"slices"
 )
 
@@ -34,7 +34,7 @@ func NewFromSlice[T any](items *[]T) List[T] {
 	return list
 }
 
-func NewFromIterable[T any](items Iterable.Iterable[T]) List[T] {
+func NewFromIterable[T any](items Interfaces.Iterable[T]) List[T] {
 	list := New[T]()
 	items.Iterate(func(item *T) bool {
 		list.Add(*item)
