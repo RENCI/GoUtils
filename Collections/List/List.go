@@ -163,10 +163,10 @@ func (list List[T]) GetRange(index int, count int) List[T] {
 }
 
 // Clone returns new instance of the list.
-func (list List[T]) Clone() List[T] {
+func (list *List[T]) Clone() *List[T] {
 	newList := New[T]()
 	newList.AddRange(list._ilist._arr[:])
-	return newList
+	return &newList
 }
 
 // GetSlice returns a copy of the slice.
