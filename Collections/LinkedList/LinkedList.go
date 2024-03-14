@@ -163,3 +163,24 @@ func (this *LinkedList[T]) RemoveNode(node *LinkedListNode[T]) {
 		this._size -= 1
 	}
 }
+
+func (this *LinkedList[K]) Iterate(foreach func(item *K) bool) {
+	c := this._root._next
+	for c._readonly == false {
+		val := c.GetValue()
+		do_next := foreach(&val)
+		if !do_next {
+			return
+		}
+		c = c._next
+	}
+}
+
+func (this *LinkedList[T]) Clone() *LinkedList[T] {
+	r := New[T]()
+	this.Iterate(func(item *T) bool {
+		r.AddLast(*item)
+		return true
+	})
+	return r
+}
