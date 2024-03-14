@@ -2,6 +2,7 @@ package Collections
 
 import (
 	"github.com/RENCI/GoUtils/Collections/LinkedList"
+	"github.com/RENCI/GoUtils/Collections/List"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -9,6 +10,21 @@ import (
 func Test_New(t *testing.T) {
 	list := LinkedList.New[int]()
 	assert.Equal(t, 0, list.Size())
+}
+
+func Test_LLNewFromSlice(t *testing.T) {
+	hs := LinkedList.NewFromSlice[int](&([]int{1, 2, 3, 4}))
+	assert.Equal(t, 4, hs.Size())
+	assert.Equal(t, 1, hs.First().GetValue())
+	assert.Equal(t, 2, hs.First().GetNext().GetValue())
+}
+
+func Test_LLNewFromIterable(t *testing.T) {
+	list := List.NewFromSlice(&([]int{1, 2, 3, 4}))
+	hs := LinkedList.NewFromIterable[int](&list)
+	assert.Equal(t, 4, hs.Size())
+	assert.Equal(t, 1, hs.First().GetValue())
+	assert.Equal(t, 2, hs.First().GetNext().GetValue())
 }
 
 func Test_AddLast(t *testing.T) {

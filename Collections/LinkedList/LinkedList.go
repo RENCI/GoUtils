@@ -1,5 +1,7 @@
 package LinkedList
 
+import Iterable "github.com/RENCI/GoUtils/Collections/Interfaces"
+
 type LinkedList[T any] struct {
 	_root *LinkedListNode[T]
 	_end  *LinkedListNode[T]
@@ -58,6 +60,23 @@ func New[T any]() *LinkedList[T] {
 		_end:  zeroNodeEnd,
 	}
 	return &res
+}
+
+func NewFromSlice[T any](items *[]T) *LinkedList[T] {
+	list := New[T]()
+	for _, i := range *items {
+		list.AddLast(i)
+	}
+	return list
+}
+
+func NewFromIterable[T any](items Iterable.Iterable[T]) *LinkedList[T] {
+	list := New[T]()
+	items.Iterate(func(item *T) bool {
+		list.AddLast(*item)
+		return true
+	})
+	return list
 }
 
 func (this *LinkedList[T]) Size() int {
