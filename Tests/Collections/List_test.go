@@ -226,33 +226,6 @@ func Test_GetSlice_no_impact_to_original(t *testing.T) {
 	assert.Equal(t, 6, res[5])
 }
 
-func Test_PushPopPeek(t *testing.T) {
-	list := List.New[int]()
-	list.Push(1)
-	list.Push(2)
-	list.Push(3)
-
-	assert.Equal(t, 3, list.Peek())
-	assert.Equal(t, 3, list.Pop())
-	assert.Equal(t, 2, list.Size())
-	assert.Equal(t, 2, list.Pop())
-	assert.Equal(t, 1, list.Pop())
-	assert.Equal(t, 0, list.Size())
-}
-
-func Test_EnqueueDequeue(t *testing.T) {
-	list := List.New[int]()
-	list.Enqueue(1)
-	list.Enqueue(2)
-	list.Enqueue(3)
-
-	assert.Equal(t, 1, list.Dequeue())
-	assert.Equal(t, 2, list.Size())
-	assert.Equal(t, 2, list.Dequeue())
-	assert.Equal(t, 3, list.Dequeue())
-	assert.Equal(t, 0, list.Size())
-}
-
 func Test_slices_ref(t *testing.T) {
 	s1 := []int{1, 2, 3, 4, 5, 6}
 

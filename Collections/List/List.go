@@ -192,39 +192,6 @@ func (list List[T]) Insert(item T, index int) {
 	list._ilist._arr[index] = item
 }
 
-// Push adds an element to the end of the list.
-func (list List[T]) Push(item T) {
-	list.Add(item)
-}
-
-// Pop returns and removes an element at the end of the list.
-func (list List[T]) Pop() T {
-	res := list.Get(list.Size() - 1)
-	list.RemoveAt(list.Size() - 1)
-	return res
-}
-
-// Peek returns an element at the end of the list wothout removing it.
-func (list List[T]) Peek() T {
-	return list.Get(list.Size() - 1)
-}
-
-// Enqueue adds an element.
-func (list List[T]) Enqueue(item T) {
-	if list.Size() == 0 {
-		list.Add(item)
-	} else {
-		list.Insert(item, 0)
-	}
-}
-
-// Dequeue returns and removes an element.
-func (list List[T]) Dequeue() T {
-	res := list.Get(list.Size() - 1)
-	list.RemoveAt(list.Size() - 1)
-	return res
-}
-
 func (list *List[T]) Iterate(foreach func(item *T) bool) {
 	for i := 0; i < list.Size(); i++ {
 		if !foreach(&list._ilist._arr[i]) {
