@@ -2,27 +2,32 @@ package FileSystem
 
 import (
 	"github.com/RENCI/GoUtils/Collections/List"
-	"github.com/RENCI/GoUtils/FileSystem/Path"
 	"os"
 )
 
-func Create(path string) error {
+type DirectoryObj struct{}
+
+func Directory_new() DirectoryObj {
+	return DirectoryObj{}
+}
+
+func (this *DirectoryObj) Create(path string) error {
 	return os.Mkdir(path, os.ModePerm)
 }
 
-func CreateSubdirectiry(path string) error {
+func (this *DirectoryObj) CreateSubdirectiry(path string) error {
 	return os.MkdirAll(path, os.ModePerm)
 }
 
-func Delete(path string) error {
+func (this *DirectoryObj) Delete(path string) error {
 	return os.Remove(path)
 }
 
-func DeleteAll(path string) error {
+func (this *DirectoryObj) DeleteAll(path string) error {
 	return os.RemoveAll(path)
 }
 
-func GetDirectories(path string) (List.List[string], error) {
+func (this *DirectoryObj) GetDirectories(path string) (List.List[string], error) {
 	files, err := os.ReadDir(path)
 
 	res := List.New[string]()
@@ -36,7 +41,7 @@ func GetDirectories(path string) (List.List[string], error) {
 	return res, err
 }
 
-func GetFiles(path string) (List.List[string], error) {
+func (this *DirectoryObj) GetFiles(path string) (List.List[string], error) {
 	files, err := os.ReadDir(path)
 
 	res := List.New[string]()

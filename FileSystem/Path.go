@@ -1,4 +1,4 @@
-package Path
+package FileSystem
 
 import (
 	"os"
@@ -10,7 +10,16 @@ import (
 var PATH_SEPARATOR = "/"
 var EXTENSION_SEPARATOR = "."
 
-func Exists(path string) (bool, error) {
+var Path = Path_New()
+
+type PathObj struct {
+}
+
+func Path_New() *PathObj {
+	return &PathObj{}
+}
+
+func (this *PathObj) Exists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
 		return true, nil
@@ -21,7 +30,7 @@ func Exists(path string) (bool, error) {
 	return false, err
 }
 
-func IsDirectory(path string) (bool, error) {
+func (this *PathObj) IsDirectory(path string) (bool, error) {
 	fi, err := os.Stat(path)
 	if err != nil {
 		return false, err
@@ -34,13 +43,13 @@ func IsDirectory(path string) (bool, error) {
 	}
 }
 
-func IsFile(path string) (bool, error) {
-	r, err := IsDirectory(path)
+func (this *PathObj) IsFile(path string) (bool, error) {
+	r, err := this.IsDirectory(path)
 	return !r, err
 }
 
-func GetDirectoryParent(path string) string {
-	path_to_proc := TrimEndingDirectorySeparator(path)
+func (this *PathObj) GetDirectoryParent(path string) string {
+	path_to_proc := this.TrimEndingDirectorySeparator(path)
 	pos := strings.LastIndex(path_to_proc, PATH_SEPARATOR)
 	if pos == -1 {
 		return ""
@@ -48,7 +57,7 @@ func GetDirectoryParent(path string) string {
 	return path[:pos]
 }
 
-func TrimEndingDirectorySeparator(path string) string {
+func (this *PathObj) TrimEndingDirectorySeparator(path string) string {
 	path_to_proc := path
 
 	if path != "" && path[len(path)-1] == PATH_SEPARATOR[0] {
@@ -57,11 +66,11 @@ func TrimEndingDirectorySeparator(path string) string {
 	return path_to_proc
 }
 
-func Combine(p1 ...string) string {
+func (this *PathObj) Combine(p1 ...string) string {
 	return path.Join(p1...)
 }
 
-func GetExtension(path string) string {
+func (this *PathObj) GetExtension(path string) string {
 	path_to_proc := path
 
 	pos_path_sep := strings.LastIndex(path_to_proc, PATH_SEPARATOR)
@@ -77,7 +86,7 @@ func GetExtension(path string) string {
 	return path[pos_ext_sep:]
 }
 
-func GetFileName(path string) string {
+func (this *PathObj) GetFileName(path string) string {
 	path_to_proc := path
 
 	pos_path_sep := strings.LastIndex(path_to_proc, PATH_SEPARATOR)
@@ -89,12 +98,12 @@ func GetFileName(path string) string {
 	return path[pos_path_sep+1:]
 }
 
-func GetFullPath(path string) (string, error) {
+func (this *PathObj) GetFullPath(path string) (string, error) {
 	absPath, err := filepath.Abs(path)
 	return absPath, err
 }
 
-func GetRelativePath(relativeTo string, path string) (string, error) {
+func (this *PathObj) GetRelativePath(relativeTo string, path string) (string, error) {
 	relativePath, err := filepath.Rel(relativeTo, path)
 	return relativePath, err
 }

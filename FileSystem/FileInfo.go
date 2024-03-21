@@ -4,13 +4,16 @@ import (
 	"bufio"
 	"encoding/json"
 	"github.com/RENCI/GoUtils/Collections/List"
-	"github.com/RENCI/GoUtils/FileSystem/Path"
 	"io"
 	"os"
 )
 
 type FileInfo struct {
 	Path string
+}
+
+func FileInfo_New(path string) *FileInfo {
+	return &FileInfo{Path: path}
 }
 
 func (this *FileInfo) Create() error {
