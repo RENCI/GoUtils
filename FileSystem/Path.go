@@ -10,7 +10,7 @@ import (
 var PATH_SEPARATOR = "/"
 var EXTENSION_SEPARATOR = "."
 
-var Path = Path_New()
+var Path PathObj
 
 type PathObj struct {
 }

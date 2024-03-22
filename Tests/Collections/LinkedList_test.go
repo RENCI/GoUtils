@@ -1,34 +1,33 @@
 package Collections
 
 import (
-	"github.com/RENCI/GoUtils/Collections/LinkedList"
-	"github.com/RENCI/GoUtils/Collections/List"
+	"github.com/RENCI/GoUtils/Collections"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func Test_New(t *testing.T) {
-	list := LinkedList.New[int]()
+	list := Collections.NewLinkedList[int]()
 	assert.Equal(t, 0, list.Size())
 }
 
 func Test_LLNewFromSlice(t *testing.T) {
-	hs := LinkedList.NewFromSlice[int](&([]int{1, 2, 3, 4}))
+	hs := Collections.NewLinkedListFromSlice[int](&([]int{1, 2, 3, 4}))
 	assert.Equal(t, 4, hs.Size())
 	assert.Equal(t, 1, hs.First().GetValue())
 	assert.Equal(t, 2, hs.First().GetNext().GetValue())
 }
 
 func Test_LLNewFromIterable(t *testing.T) {
-	list := List.NewFromSlice(&([]int{1, 2, 3, 4}))
-	hs := LinkedList.NewFromIterable[int](&list)
+	list := Collections.NewListFromSlice(&([]int{1, 2, 3, 4}))
+	hs := Collections.NewLinkedListFromIterable[int](&list)
 	assert.Equal(t, 4, hs.Size())
 	assert.Equal(t, 1, hs.First().GetValue())
 	assert.Equal(t, 2, hs.First().GetNext().GetValue())
 }
 
 func Test_AddLast(t *testing.T) {
-	list := LinkedList.New[int]()
+	list := Collections.NewLinkedList[int]()
 	list.AddLast(1)
 	assert.Equal(t, 1, list.Size())
 	assert.Equal(t, 1, list.First().GetValue())
@@ -36,7 +35,7 @@ func Test_AddLast(t *testing.T) {
 }
 
 func Test_AddLast_2(t *testing.T) {
-	hs := LinkedList.New[int]()
+	hs := Collections.NewLinkedList[int]()
 	hs.AddLast(1)
 	hs.AddLast(2)
 	assert.Equal(t, 2, hs.Size())
@@ -45,7 +44,7 @@ func Test_AddLast_2(t *testing.T) {
 }
 
 func Test_AddLast_3(t *testing.T) {
-	hs := LinkedList.New[int]()
+	hs := Collections.NewLinkedList[int]()
 	hs.AddLast(1)
 	hs.AddLast(2)
 	hs.AddLast(3)
@@ -57,7 +56,7 @@ func Test_AddLast_3(t *testing.T) {
 }
 
 func Test_Remove_1(t *testing.T) {
-	hs := LinkedList.New[int]()
+	hs := Collections.NewLinkedList[int]()
 	hs.AddLast(1)
 	hs.AddLast(2)
 	hs.AddLast(3)
@@ -71,7 +70,7 @@ func Test_Remove_1(t *testing.T) {
 }
 
 func Test_AddBefore(t *testing.T) {
-	hs := LinkedList.New[int]()
+	hs := Collections.NewLinkedList[int]()
 	hs.AddLast(1)
 	n := hs.AddLast(3)
 	hs.AddLast(4)
@@ -85,7 +84,7 @@ func Test_AddBefore(t *testing.T) {
 }
 
 func Test_AddAfter(t *testing.T) {
-	hs := LinkedList.New[int]()
+	hs := Collections.NewLinkedList[int]()
 	n := hs.AddLast(1)
 	hs.AddLast(3)
 	hs.AddLast(4)
@@ -99,7 +98,7 @@ func Test_AddAfter(t *testing.T) {
 }
 
 func Test_GetNext(t *testing.T) {
-	hs := LinkedList.New[int]()
+	hs := Collections.NewLinkedList[int]()
 	hs.AddLast(1)
 	hs.AddLast(2)
 	assert.Equal(t, 2, hs.First().GetNext().GetValue())
@@ -107,7 +106,7 @@ func Test_GetNext(t *testing.T) {
 }
 
 func Test_GetBefore(t *testing.T) {
-	hs := LinkedList.New[int]()
+	hs := Collections.NewLinkedList[int]()
 	hs.AddLast(1)
 	hs.AddLast(2)
 	assert.Equal(t, 1, hs.Last().GetBefore().GetValue())
@@ -115,7 +114,7 @@ func Test_GetBefore(t *testing.T) {
 }
 
 func Test_AddFirst(t *testing.T) {
-	hs := LinkedList.New[int]()
+	hs := Collections.NewLinkedList[int]()
 	hs.AddLast(1)
 	hs.AddLast(2)
 	hs.AddFirst(3)
@@ -125,7 +124,7 @@ func Test_AddFirst(t *testing.T) {
 }
 
 func Test_AddAfter_2(t *testing.T) {
-	hs := LinkedList.New[int]()
+	hs := Collections.NewLinkedList[int]()
 	hs.AddLast(1)
 	n := hs.AddLast(2)
 	hs.AddLast(3)
@@ -137,7 +136,7 @@ func Test_AddAfter_2(t *testing.T) {
 }
 
 func Test_Find(t *testing.T) {
-	hs := LinkedList.New[int]()
+	hs := Collections.NewLinkedList[int]()
 	hs.AddLast(1)
 	n := hs.AddLast(2)
 	hs.AddLast(3)
@@ -158,7 +157,7 @@ func Test_Find(t *testing.T) {
 }
 
 func Test_RemoveFirst(t *testing.T) {
-	hs := LinkedList.New[int]()
+	hs := Collections.NewLinkedList[int]()
 	hs.AddLast(1)
 	hs.AddLast(2)
 	hs.AddLast(3)
@@ -186,7 +185,7 @@ func Test_RemoveFirst(t *testing.T) {
 }
 
 func Test_RemoveLast(t *testing.T) {
-	hs := LinkedList.New[int]()
+	hs := Collections.NewLinkedList[int]()
 	hs.AddLast(1)
 	hs.AddLast(2)
 	hs.AddLast(3)

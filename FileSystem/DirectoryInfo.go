@@ -1,7 +1,7 @@
 package FileSystem
 
 import (
-	"github.com/RENCI/GoUtils/Collections/List"
+	"github.com/RENCI/GoUtils/Collections"
 	"path/filepath"
 )
 
@@ -16,9 +16,9 @@ func DirectoryInfo_New(path string) *DirectoryInfo {
 	return &di
 }
 
-func (this *DirectoryInfo) GetDirectories() (List.List[DirectoryInfo], error) {
+func (this *DirectoryInfo) GetDirectories() (Collections.List[DirectoryInfo], error) {
 	dirs, err := this._directory.GetDirectories(this.Path)
-	res := List.NewList[DirectoryInfo](dirs.Size())
+	res := Collections.NewListWSize[DirectoryInfo](dirs.Size())
 
 	for i := 0; i < dirs.Size(); i++ {
 		res.Set(i, DirectoryInfo{Path: dirs.Get(i)})
@@ -53,9 +53,9 @@ func (this *DirectoryInfo) GetAbsPath() (string, error) {
 	return filepath.Abs(this.Path)
 }
 
-func (this *DirectoryInfo) GetFiles() (List.List[FileInfo], error) {
+func (this *DirectoryInfo) GetFiles() (Collections.List[FileInfo], error) {
 	dirs, err := this._directory.GetFiles(this.Path)
-	res := List.NewList[FileInfo](dirs.Size())
+	res := Collections.NewListWSize[FileInfo](dirs.Size())
 
 	for i := 0; i < dirs.Size(); i++ {
 		res.Set(i, FileInfo{Path: dirs.Get(i)})

@@ -1,4 +1,4 @@
-package Interfaces
+package Collections
 
 type Iterable[T any] interface {
 	Iterate(foreach func(item *T) bool)

@@ -1,31 +1,26 @@
-package Queue
-
-import (
-	Iterable "github.com/RENCI/GoUtils/Collections/Interfaces"
-	"github.com/RENCI/GoUtils/Collections/LinkedList"
-)
+package Collections
 
 type Queue[T any] struct {
-	_dlist *LinkedList.LinkedList[T]
+	_dlist *LinkedList[T]
 }
 
-func New[T any]() *Queue[T] {
+func NewQueue[T any]() *Queue[T] {
 	res := Queue[T]{
-		_dlist: LinkedList.New[T](),
+		_dlist: NewLinkedList[T](),
 	}
 	return &res
 }
 
-func NewFromSlice[T any](items *[]T) *Queue[T] {
-	res := New[T]()
+func NewQueueFromSlice[T any](items *[]T) *Queue[T] {
+	res := NewQueue[T]()
 	for _, t := range *items {
 		res.Enqueue(t)
 	}
 	return res
 }
 
-func NewFromIterable[T any](items Iterable.Iterable[T]) *Queue[T] {
-	res := New[T]()
+func NewQueueFromIterable[T any](items Iterable[T]) *Queue[T] {
+	res := NewQueue[T]()
 	items.Iterate(func(item *T) bool {
 		res.Enqueue(*item)
 		return true

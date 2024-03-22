@@ -10,10 +10,10 @@ var TEST_PATH_FI = "./Data/File"
 
 func Test_FileInfo_Create(t *testing.T) {
 
-	p := fs.Path.Combine(TEST_PATH_FI, "file1.txt")
+	p := FileSystem.Path.Combine(TEST_PATH_FI, "file1.txt")
 	fi := FileSystem.FileInfo_New(p)
 	fi.Create()
-	exists, err2 := fs.Path.Exists(p)
+	exists, err2 := FileSystem.Path.Exists(p)
 	assert.True(t, exists)
 	assert.Nil(t, err2)
 	assert.NotNil(t, fi)

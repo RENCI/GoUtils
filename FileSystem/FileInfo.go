@@ -3,7 +3,7 @@ package FileSystem
 import (
 	"bufio"
 	"encoding/json"
-	"github.com/RENCI/GoUtils/Collections/List"
+	"github.com/RENCI/GoUtils/Collections"
 	"io"
 	"os"
 )
@@ -55,8 +55,8 @@ func (this *FileInfo) WriteAllText(text string) error {
 	return err
 }
 
-func (this *FileInfo) ReadFileLines() (List.List[string], error) {
-	res := List.New[string]()
+func (this *FileInfo) ReadFileLines() (Collections.List[string], error) {
+	res := Collections.NewList[string]()
 	f, err := os.OpenFile(this.Path, os.O_RDONLY, os.ModePerm)
 	if err != nil {
 		return res, err

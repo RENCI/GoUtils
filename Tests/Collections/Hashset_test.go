@@ -1,29 +1,29 @@
 package Collections
 
 import (
-	"github.com/RENCI/GoUtils/Collections/Hashset"
+	"github.com/RENCI/GoUtils/Collections"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func Test_NewHashset(t *testing.T) {
-	hs := Hashset.New[int]()
+	hs := Collections.NewHashset[int]()
 	assert.Equal(t, 0, hs.Size())
 }
 
 func Test_NewFromSlice(t *testing.T) {
-	hs := Hashset.NewFromSlice[int](&([]int{100, 20, 3}))
+	hs := Collections.NewHashsetFromSlice[int](&([]int{100, 20, 3}))
 	assert.Equal(t, 3, hs.Size())
 }
 
 func Test_NewFromIterable(t *testing.T) {
-	hs1 := Hashset.NewFromSlice[int](&([]int{100, 20, 3}))
-	hs2 := Hashset.NewFromIterable[int](hs1)
+	hs1 := Collections.NewHashsetFromSlice[int](&([]int{100, 20, 3}))
+	hs2 := Collections.NewHashsetFromIterable[int](hs1)
 	assert.Equal(t, 3, hs2.Size())
 }
 
 func Test_Add_Size_Contains(t *testing.T) {
-	hs := Hashset.New[int]()
+	hs := Collections.NewHashset[int]()
 	hs.Add(1)
 	hs.Add(2)
 	assert.Equal(t, 2, hs.Size())
@@ -33,7 +33,7 @@ func Test_Add_Size_Contains(t *testing.T) {
 }
 
 func Test_Remove(t *testing.T) {
-	hs := Hashset.New[int]()
+	hs := Collections.NewHashset[int]()
 	hs.Add(1)
 	hs.Add(2)
 	hs.Remove(1)
@@ -42,7 +42,7 @@ func Test_Remove(t *testing.T) {
 }
 
 func Test_Clear(t *testing.T) {
-	hs := Hashset.New[int]()
+	hs := Collections.NewHashset[int]()
 	hs.Add(1)
 	hs.Add(2)
 
@@ -51,7 +51,7 @@ func Test_Clear(t *testing.T) {
 }
 
 func Test_Iterate(t *testing.T) {
-	hs := Hashset.New[int]()
+	hs := Collections.NewHashset[int]()
 	hs.Add(100)
 	hs.Add(20)
 	hs.Add(3)
@@ -64,7 +64,7 @@ func Test_Iterate(t *testing.T) {
 }
 
 func Test_ExceptWith(t *testing.T) {
-	hs := Hashset.New[int]()
+	hs := Collections.NewHashset[int]()
 	hs.Add(100)
 	hs.Add(20)
 	hs.Add(3)
@@ -76,7 +76,7 @@ func Test_ExceptWith(t *testing.T) {
 }
 
 func Test_IntersectWith(t *testing.T) {
-	hs := Hashset.New[int]()
+	hs := Collections.NewHashset[int]()
 	hs.Add(100)
 	hs.Add(20)
 	hs.Add(3)
@@ -89,7 +89,7 @@ func Test_IntersectWith(t *testing.T) {
 }
 
 func Test_UnionWith(t *testing.T) {
-	hs := Hashset.New[int]()
+	hs := Collections.NewHashset[int]()
 	hs.Add(100)
 	hs.Add(20)
 	hs.Add(3)
@@ -102,7 +102,7 @@ func Test_UnionWith(t *testing.T) {
 }
 
 func Test_Clone(t *testing.T) {
-	hs1 := Hashset.New[int]()
+	hs1 := Collections.NewHashset[int]()
 	hs1.Add(100)
 	hs1.Add(20)
 	hs1.Add(3)

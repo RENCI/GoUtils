@@ -1,7 +1,6 @@
-package List
+package Collections
 
 import (
-	"github.com/RENCI/GoUtils/Collections/Interfaces"
 	"slices"
 )
 
@@ -16,7 +15,7 @@ type List[T any] struct {
 }
 
 // New creates new instance of List.
-func New[T any]() List[T] {
+func NewList[T any]() List[T] {
 	ilist := &InternalList[T]{
 		_arr: []T{},
 	}
@@ -26,16 +25,16 @@ func New[T any]() List[T] {
 	return list
 }
 
-func NewFromSlice[T any](items *[]T) List[T] {
-	list := New[T]()
+func NewListFromSlice[T any](items *[]T) List[T] {
+	list := NewList[T]()
 	for _, i := range *items {
 		list.Add(i)
 	}
 	return list
 }
 
-func NewFromIterable[T any](items Interfaces.Iterable[T]) List[T] {
-	list := New[T]()
+func NewListFromIterable[T any](items Iterable[T]) List[T] {
+	list := NewList[T]()
 	items.Iterate(func(item *T) bool {
 		list.Add(*item)
 		return true
@@ -44,7 +43,7 @@ func NewFromIterable[T any](items Interfaces.Iterable[T]) List[T] {
 }
 
 // New creates new instance of List.
-func NewList[T any](size int) List[T] {
+func NewListWSize[T any](size int) List[T] {
 	ilist := &InternalList[T]{
 		_arr: make([]T, size),
 	}
@@ -157,14 +156,14 @@ func (list List[T]) RemoveRange(index int, count int) {
 
 // GetRange returns new list with elements specified by range.
 func (list List[T]) GetRange(index int, count int) List[T] {
-	newList := New[T]()
+	newList := NewList[T]()
 	newList.AddRange(list._ilist._arr[index : index+count])
 	return newList
 }
 
 // Clone returns new instance of the list.
 func (list *List[T]) Clone() *List[T] {
-	newList := New[T]()
+	newList := NewList[T]()
 	newList.AddRange(list._ilist._arr[:])
 	return &newList
 }

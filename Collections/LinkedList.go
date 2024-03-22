@@ -1,6 +1,4 @@
-package LinkedList
-
-import Iterable "github.com/RENCI/GoUtils/Collections/Interfaces"
+package Collections
 
 type LinkedList[T any] struct {
 	_root *LinkedListNode[T]
@@ -48,7 +46,7 @@ func _newReadOnlyNode[T any]() *LinkedListNode[T] {
 	return &res
 }
 
-func New[T any]() *LinkedList[T] {
+func NewLinkedList[T any]() *LinkedList[T] {
 	var zeroNodeRoot = _newReadOnlyNode[T]()
 	var zeroNodeEnd = _newReadOnlyNode[T]()
 
@@ -62,16 +60,16 @@ func New[T any]() *LinkedList[T] {
 	return &res
 }
 
-func NewFromSlice[T any](items *[]T) *LinkedList[T] {
-	list := New[T]()
+func NewLinkedListFromSlice[T any](items *[]T) *LinkedList[T] {
+	list := NewLinkedList[T]()
 	for _, i := range *items {
 		list.AddLast(i)
 	}
 	return list
 }
 
-func NewFromIterable[T any](items Iterable.Iterable[T]) *LinkedList[T] {
-	list := New[T]()
+func NewLinkedListFromIterable[T any](items Iterable[T]) *LinkedList[T] {
+	list := NewLinkedList[T]()
 	items.Iterate(func(item *T) bool {
 		list.AddLast(*item)
 		return true
@@ -177,7 +175,7 @@ func (this *LinkedList[K]) Iterate(foreach func(item *K) bool) {
 }
 
 func (this *LinkedList[T]) Clone() *LinkedList[T] {
-	r := New[T]()
+	r := NewLinkedList[T]()
 	this.Iterate(func(item *T) bool {
 		r.AddLast(*item)
 		return true

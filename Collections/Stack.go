@@ -1,31 +1,26 @@
-package Stack
-
-import (
-	Iterable "github.com/RENCI/GoUtils/Collections/Interfaces"
-	"github.com/RENCI/GoUtils/Collections/LinkedList"
-)
+package Collections
 
 type Stack[T any] struct {
-	_dlist *LinkedList.LinkedList[T]
+	_dlist *LinkedList[T]
 }
 
-func New[T any]() *Stack[T] {
+func NewStack[T any]() *Stack[T] {
 	res := Stack[T]{
-		_dlist: LinkedList.New[T](),
+		_dlist: NewLinkedList[T](),
 	}
 	return &res
 }
 
-func NewFromSlice[T any](items *[]T) *Stack[T] {
-	res := New[T]()
+func NewStackFromSlice[T any](items *[]T) *Stack[T] {
+	res := NewStack[T]()
 	for _, t := range *items {
 		res.Push(t)
 	}
 	return res
 }
 
-func NewFromIterable[T any](items Iterable.Iterable[T]) *Stack[T] {
-	res := New[T]()
+func NewStackFromIterable[T any](items Iterable[T]) *Stack[T] {
+	res := NewStack[T]()
 	items.Iterate(func(item *T) bool {
 		res.Push(*item)
 		return true
