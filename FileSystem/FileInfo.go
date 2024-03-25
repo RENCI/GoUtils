@@ -68,6 +68,9 @@ func (this *FileInfo) ReadFileLines() (Collections.List[string], error) {
 		line, err := rd.ReadString('\n')
 		if err != nil {
 			if err == io.EOF {
+				if len(line) > 0 {
+					res.Add(line)
+				}
 				break
 			}
 			return res, err
