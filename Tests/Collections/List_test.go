@@ -252,3 +252,21 @@ func Test_slices_val(t *testing.T) {
 
 	assert.Equal(t, 6, len(s1))
 }
+
+func Test_Min(t *testing.T) {
+	list := Collections.NewList[int]()
+	list.AddRange([]int{100, 2, 3, 4, 500, 6, 7, 8, 9, 10})
+	minval := *list.Min(func(a int, b int) int {
+		return a - b
+	})
+	assert.Equal(t, 2, minval)
+}
+
+func Test_Max(t *testing.T) {
+	list := Collections.NewList[int]()
+	list.AddRange([]int{100, 2, 3, 4, 500, 6, 7, 8, 9, 10})
+	maxval := *list.Max(func(a int, b int) int {
+		return a - b
+	})
+	assert.Equal(t, 500, maxval)
+}

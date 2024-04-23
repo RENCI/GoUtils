@@ -198,3 +198,39 @@ func (list *List[T]) Iterate(foreach func(item *T) bool) {
 		}
 	}
 }
+
+func (list *List[T]) Min(cmpfunc func(item1 T, item2 T) int) *T {
+	var res *T = nil
+
+	if list.Size() > 0 {
+		res = &list._ilist._arr[0]
+	} else {
+		return res
+	}
+
+	for i := 1; i < list.Size(); i++ {
+		c := list.Get(i)
+		if cmpfunc(*res, c) > 0 {
+			res = &c
+		}
+	}
+	return res
+}
+
+func (list *List[T]) Max(cmpfunc func(item1 T, item2 T) int) *T {
+	var res *T = nil
+
+	if list.Size() > 0 {
+		res = &list._ilist._arr[0]
+	} else {
+		return res
+	}
+
+	for i := 1; i < list.Size(); i++ {
+		c := list.Get(i)
+		if cmpfunc(*res, c) < 0 {
+			res = &c
+		}
+	}
+	return res
+}
