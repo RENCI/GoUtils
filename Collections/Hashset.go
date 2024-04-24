@@ -90,14 +90,6 @@ func (this *Hashset[K]) UnionWith(other *[]K) {
 
 func (this *Hashset[K]) Clone() *Hashset[K] {
 	res := NewHashset[K]()
-	res._imap = copyMap(this._imap)
+	res._imap = CopyMap(this._imap)
 	return res
-}
-
-func copyMap(m *map[interface{}]bool) *map[interface{}]bool {
-	m2 := make(map[interface{}]bool, len(*m))
-	var id interface{}
-	for id, m2[id] = range *m {
-	}
-	return &m2
 }
