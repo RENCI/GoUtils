@@ -29,9 +29,6 @@ Some functionality of the standrard lib is not convienent as can be or scattered
  - IsFile
  - TrimEndingDirectorySeparator
 
-
-# In development: 
-
 ## Directory
  - Create
  - CreateSubdrectory
