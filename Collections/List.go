@@ -78,6 +78,14 @@ func (list List[T]) AddRange(items []T) {
 	list._ilist._arr = append(list._ilist._arr, items...)
 }
 
+// Adds all items from iterable
+func (list List[T]) AddIterable(iterable Iterable[T]) {
+	iterable.Iterate(func(item *T) bool {
+		list.Add(*item)
+		return true
+	})
+}
+
 // Clear removes all items from the list
 func (list List[T]) Clear() {
 	list._ilist._arr = []T{}
