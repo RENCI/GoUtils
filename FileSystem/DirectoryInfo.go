@@ -62,3 +62,34 @@ func (this *DirectoryInfo) GetFiles() (Collections.List[FileInfo], error) {
 	}
 	return res, err
 }
+
+func (this *DirectoryInfo) GetAllFiles() (Collections.List[string], error) {
+	allfiles := Collections.NewList[string]()
+
+	dirs, err := this.GetDirectories()
+
+	if err != nil {
+		return allfiles, err
+	}
+
+	dirs.ForEach(func(item DirectoryInfo) {
+		res, err2 := item.GetAllFiles()
+		if err2 != nil {
+			err = err2
+			return
+		}
+		allfiles.AddIterable(&res)
+	})
+
+	if err != nil {
+		return allfiles, err
+	}
+
+	files, err := this.GetFiles()
+
+	files.ForEach(func(item FileInfo) {
+		allfiles.Add(item.Path)
+	})
+
+	return allfiles, err
+}
