@@ -176,8 +176,8 @@ func (list *List[T]) Clone() *List[T] {
 	return &newList
 }
 
-// GetSlice returns a copy of the slice.
-func (list List[T]) GetSlice() []T {
+// ToSlice returns a copy of the slice.
+func (list List[T]) ToSlice() []T {
 	res := make([]T, len(list._ilist._arr))
 	copy(res, list._ilist._arr)
 	return res

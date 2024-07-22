@@ -88,6 +88,38 @@ func (this *Hashset[K]) UnionWith(other *[]K) {
 	}
 }
 
+func (this *Hashset[K]) UnionWithHS(other *Hashset[K]) {
+	for k, _ := range *other._imap {
+		this.Add(k.(K))
+	}
+}
+
+func (this *Hashset[K]) ExceptWithHS(other *Hashset[K]) {
+	for k, _ := range *other._imap {
+		this.Remove(k.(K))
+	}
+}
+
+func (this *Hashset[K]) IntersectWithHS(other *Hashset[K]) {
+	res := map[interface{}]bool{}
+
+	for k, _ := range *other._imap {
+		if this.Contains(k.(K)) {
+			res[k] = false
+		}
+	}
+
+	this._imap = &res
+}
+
+func (this *Hashset[K]) ToList() List[K] {
+	r := NewList[K]()
+	for k := range *this._imap {
+		r.Add(k.(K))
+	}
+	return r
+}
+
 func (this *Hashset[K]) Clone() *Hashset[K] {
 	res := NewHashset[K]()
 	res._imap = CopyMap(this._imap)

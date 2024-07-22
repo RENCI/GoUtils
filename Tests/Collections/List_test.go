@@ -230,7 +230,7 @@ func Test_GetClone_no_impact_to_original(t *testing.T) {
 func Test_GetSlice_no_impact_to_original(t *testing.T) {
 	list := Collections.NewList[int]()
 	list.AddRange([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0})
-	res := list.GetSlice()
+	res := list.ToSlice()
 	assert.Equal(t, 10, len(res))
 	assert.Equal(t, 4, res[3])
 	assert.Equal(t, 5, res[4])
