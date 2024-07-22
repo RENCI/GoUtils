@@ -28,9 +28,9 @@ func GetKeysFromMap[K comparable, V any](m map[K]V) List[K] {
 }
 
 func CopyMap(m *map[any]bool) *map[any]bool {
-	m2 := make(map[any]bool, len(*m))
-	var id any
-	for id, m2[id] = range *m {
+	m2 := map[any]bool{}
+	for k, v := range *m {
+		m2[k] = v
 	}
 	return &m2
 }
