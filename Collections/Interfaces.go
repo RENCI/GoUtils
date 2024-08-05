@@ -1,7 +1,9 @@
 package Collections
 
+import "iter"
+
 type Iterable[T any] interface {
-	Iterate(foreach func(item *T) bool)
+	GetSeq() iter.Seq[T]
 }
 
 type Cloneable[T any] interface {

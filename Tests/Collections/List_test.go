@@ -46,7 +46,7 @@ func Test_AddIterable(t *testing.T) {
 	list1.AddRange([]int{1, 2, 3, 4, 5})
 	list2 := Collections.NewList[int]()
 	list2.AddRange([]int{6, 7})
-	list1.AddIterable(&list2)
+	list1.AddSeq(list2.GetSeq())
 
 	assert.Equal(t, 7, list1.Size())
 	assert.Equal(t, 1, list1.Get(0))

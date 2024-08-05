@@ -5,26 +5,17 @@ func GroupBy[T any, R comparable, M ~map[R]List[T]](col Iterable[T], groupFunc f
 
 	var res = make(map[R]List[T])
 
-	col.Iterate(func(item *T) bool {
-		r := groupFunc(*item)
+	for item := range col.GetSeq() {
+		r := groupFunc(item)
 		g, exists := res[r]
 		if !exists {
 			g = NewList[T]()
 			res[r] = g
 		}
-		g.Add(*item)
-
-		return true
-	})
-	return res
-}
-
-func GetKeysFromMap[K comparable, V any](m map[K]V) List[K] {
-	r := NewList[K]()
-	for k := range m {
-		r.Add(k)
+		g.Add(item)
 	}
-	return r
+
+	return res
 }
 
 func CopyMap(m *map[any]bool) *map[any]bool {

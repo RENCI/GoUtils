@@ -1,6 +1,7 @@
 package Collections
 
 import (
+	"iter"
 	"slices"
 )
 
@@ -35,10 +36,9 @@ func NewListFromSlice[T any](items *[]T) List[T] {
 
 func NewListFromIterable[T any](items Iterable[T]) List[T] {
 	list := NewList[T]()
-	items.Iterate(func(item *T) bool {
-		list.Add(*item)
-		return true
-	})
+	for item := range items.GetSeq() {
+		list.Add(item)
+	}
 	return list
 }
 
@@ -79,11 +79,10 @@ func (list List[T]) AddRange(items []T) {
 }
 
 // Adds all items from iterable
-func (list List[T]) AddIterable(iterable Iterable[T]) {
-	iterable.Iterate(func(item *T) bool {
-		list.Add(*item)
-		return true
-	})
+func (list List[T]) AddSeq(seq iter.Seq[T]) {
+	for v := range seq {
+		list.Add(v)
+	}
 }
 
 // Clear removes all items from the list
@@ -199,10 +198,22 @@ func (list List[T]) Insert(item T, index int) {
 	list._ilist._arr[index] = item
 }
 
-func (list *List[T]) Iterate(foreach func(item *T) bool) {
-	for i := 0; i < list.Size(); i++ {
-		if !foreach(&list._ilist._arr[i]) {
-			return
+func (list *List[T]) GetSeq() iter.Seq[T] {
+	return func(yield func(T) bool) {
+		for _, item := range list._ilist._arr {
+			if !yield(item) {
+				return
+			}
+		}
+	}
+}
+
+func (list *List[T]) GetSeq2() iter.Seq2[T, int] {
+	return func(yield func(T, int) bool) {
+		for i, item := range list._ilist._arr {
+			if !yield(item, i) {
+				return
+			}
 		}
 	}
 }

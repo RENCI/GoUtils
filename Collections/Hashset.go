@@ -1,5 +1,7 @@
 package Collections
 
+import "iter"
+
 type Hashset[K any] struct {
 	_imap *map[interface{}]bool
 }
@@ -19,10 +21,9 @@ func NewHashsetFromSlice[K any](items *[]K) *Hashset[K] {
 func NewHashsetFromIterable[K any](items Iterable[K]) *Hashset[K] {
 	hs := NewHashset[K]()
 
-	items.Iterate(func(item *K) bool {
-		hs.Add(*item)
-		return true
-	})
+	for item := range items.GetSeq() {
+		hs.Add(item)
+	}
 	return hs
 }
 
@@ -51,14 +52,16 @@ func (this *Hashset[K]) Contains(key K) bool {
 	return false
 }
 
-func (this *Hashset[K]) Iterate(foreach func(item *K) bool) {
-	for k, _ := range *this._imap {
-		switch t := k.(type) {
-		default:
-			return
-		case K:
-			if !foreach(&t) {
+func (this *Hashset[K]) GetSeq() iter.Seq[K] {
+	return func(yield func(K) bool) {
+		for k, _ := range *this._imap {
+			switch t := k.(type) {
+			default:
 				return
+			case K:
+				if !yield(t) {
+					return
+				}
 			}
 		}
 	}

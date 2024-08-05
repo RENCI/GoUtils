@@ -18,9 +18,3 @@ func Test_GroupBy(t *testing.T) {
 	assert.Equal(t, 5, grouped[true].Size())
 	assert.Equal(t, 5, grouped[false].Size())
 }
-
-func Test_GetKeysFromMap(t *testing.T) {
-	m := map[int]bool{1: true, 2: false, 3: true}
-	keys := Collections.GetKeysFromMap(m)
-	assert.Equal(t, 3, keys.Size())
-}

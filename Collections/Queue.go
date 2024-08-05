@@ -21,10 +21,9 @@ func NewQueueFromSlice[T any](items *[]T) *Queue[T] {
 
 func NewQueueFromIterable[T any](items Iterable[T]) *Queue[T] {
 	res := NewQueue[T]()
-	items.Iterate(func(item *T) bool {
-		res.Enqueue(*item)
-		return true
-	})
+	for item := range items.GetSeq() {
+		res.Enqueue(item)
+	}
 	return res
 }
 

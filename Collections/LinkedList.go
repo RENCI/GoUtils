@@ -1,5 +1,7 @@
 package Collections
 
+import "iter"
+
 type LinkedList[T any] struct {
 	_root *LinkedListNode[T]
 	_end  *LinkedListNode[T]
@@ -70,10 +72,9 @@ func NewLinkedListFromSlice[T any](items *[]T) *LinkedList[T] {
 
 func NewLinkedListFromIterable[T any](items Iterable[T]) *LinkedList[T] {
 	list := NewLinkedList[T]()
-	items.Iterate(func(item *T) bool {
-		list.AddLast(*item)
-		return true
-	})
+	for item := range items.GetSeq() {
+		list.AddLast(item)
+	}
 	return list
 }
 
@@ -162,23 +163,24 @@ func (this *LinkedList[T]) RemoveNode(node *LinkedListNode[T]) {
 	}
 }
 
-func (this *LinkedList[K]) Iterate(foreach func(item *K) bool) {
-	c := this._root._next
-	for c._readonly == false {
-		val := c.GetValue()
-		do_next := foreach(&val)
-		if !do_next {
-			return
+func (this *LinkedList[K]) GetSeq() iter.Seq[K] {
+	return func(yield func(K) bool) {
+		c := this._root._next
+		for c._readonly == false {
+			val := c.GetValue()
+			do_next := yield(val)
+			if !do_next {
+				return
+			}
+			c = c._next
 		}
-		c = c._next
 	}
 }
 
 func (this *LinkedList[T]) Clone() *LinkedList[T] {
 	r := NewLinkedList[T]()
-	this.Iterate(func(item *T) bool {
-		r.AddLast(*item)
-		return true
-	})
+	for item := range this.GetSeq() {
+		r.AddLast(item)
+	}
 	return r
 }

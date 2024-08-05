@@ -21,10 +21,9 @@ func NewStackFromSlice[T any](items *[]T) *Stack[T] {
 
 func NewStackFromIterable[T any](items Iterable[T]) *Stack[T] {
 	res := NewStack[T]()
-	items.Iterate(func(item *T) bool {
-		res.Push(*item)
-		return true
-	})
+	for item := range items.GetSeq() {
+		res.Push(item)
+	}
 	return res
 }
 

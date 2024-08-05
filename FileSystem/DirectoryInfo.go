@@ -78,7 +78,7 @@ func (this *DirectoryInfo) GetAllFiles() (Collections.List[string], error) {
 			err = err2
 			return
 		}
-		allfiles.AddIterable(&res)
+		allfiles.AddSeq(res.GetSeq())
 	})
 
 	if err != nil {

@@ -56,10 +56,9 @@ func Test_Iterate(t *testing.T) {
 	hs.Add(20)
 	hs.Add(3)
 	s := 0
-	hs.Iterate(func(item *int) bool {
-		s += *item
-		return true
-	})
+	for item := range hs.GetSeq() {
+		s += item
+	}
 	assert.Equal(t, 123, s)
 }
 
