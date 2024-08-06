@@ -1,6 +1,7 @@
 package Convert
 
 import (
+	"encoding/json"
 	"errors"
 	"strconv"
 )
@@ -51,4 +52,23 @@ func StringToFloat64(i string) (float64, error) {
 		return 0, err
 	}
 	return value, nil
+}
+
+func MapFromJson(jsondata []byte) (map[string]any, error) {
+	var data map[string]any
+	err := json.Unmarshal(jsondata, &data)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}
+
+func MapToFormattedJson(data map[string]any) ([]byte, error) {
+	res, err := json.MarshalIndent(data, "", "  ") //json.Marshal(data)
+	return res, err
+}
+
+func MapToJson(data map[string]any) ([]byte, error) {
+	res, err := json.Marshal(data)
+	return res, err
 }
