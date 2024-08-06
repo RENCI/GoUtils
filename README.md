@@ -50,4 +50,4 @@ Some functionality of the standrard lib is not convienent as can be or scattered
  - WriteBytes
    
 
-Requirement: Go 1.22+
+Requirement: Go 1.23+
