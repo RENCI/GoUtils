@@ -2,8 +2,10 @@ package FileSystem
 
 import (
 	"bufio"
+	"encoding/hex"
 	"encoding/json"
 	"github.com/RENCI/GoUtils/Collections"
+	"hash"
 	"io"
 	"os"
 )
@@ -79,6 +81,22 @@ func (this *FileInfo) ReadFileLines() (Collections.List[string], error) {
 	}
 
 	return res, nil
+}
+
+func (this *FileInfo) GetFileChecksum(hash hash.Hash) (string, error) {
+	//println(filePath)
+	//defer timeTrack(time.Now(), fmt.Sprintf("getFileChecksum [%s]: ", filePath))
+	file, err := os.Open(this.Path)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+
+	if _, err := io.Copy(hash, file); err != nil {
+		return "", err
+	}
+	hashstr := hex.EncodeToString(hash.Sum(nil))
+	return hashstr, nil
 }
 
 func (this *FileInfo) LoadJSON() (interface{}, error) {
