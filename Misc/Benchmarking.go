@@ -10,6 +10,8 @@ type BenchmarkResult struct {
 	Iterations Collections.List[time.Duration]
 	Average    time.Duration
 	Median     time.Duration
+	Min        time.Duration
+	Max        time.Duration
 }
 
 func Benchmark(name string, iterations int, f func()) *BenchmarkResult {
@@ -48,4 +50,6 @@ func (this *BenchmarkResult) Calculate() {
 		}
 	})
 	this.Median = this.Iterations.Get(this.Iterations.Size() / 2)
+	this.Min = this.Iterations.Get(0)
+	this.Max = this.Iterations.Get(this.Iterations.Size() - 1)
 }
