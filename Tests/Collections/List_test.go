@@ -1,8 +1,9 @@
 package Collections_test
 
 import (
-	"github.com/RENCI/GoUtils/Collections"
 	"testing"
+
+	"github.com/RENCI/GoUtils/Collections"
 )
 import "github.com/stretchr/testify/assert"
 
@@ -51,6 +52,17 @@ func Test_AddIterable(t *testing.T) {
 	assert.Equal(t, 7, list1.Size())
 	assert.Equal(t, 1, list1.Get(0))
 	assert.Equal(t, 7, list1.Get(6))
+}
+
+func Test_Insert(t *testing.T) {
+	list1 := Collections.NewList[int]()
+	list1.AddRange([]int{1, 2, 3})
+	list1.Insert(11, 0)
+	list1.Insert(55, 4)
+	assert.Equal(t, 11, list1.Get(0))
+	assert.Equal(t, 1, list1.Get(1))
+	assert.Equal(t, 2, list1.Get(2))
+	assert.Equal(t, 55, list1.Get(4))
 }
 
 func Test_Clean(t *testing.T) {

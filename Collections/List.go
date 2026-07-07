@@ -143,7 +143,7 @@ func (list List[T]) IndexOf(f func(item T) bool) int {
 
 // IndexOfInRange finds first occurrence of an element in the list in specified index range
 func (list List[T]) IndexOfInRange(f func(item T) bool, startIndex int, endIndex int) int {
-	for i := startIndex; i < list.Size() || i <= endIndex; i++ {
+	for i := startIndex; i < list.Size() && i <= endIndex; i++ {
 		if f(list.Get(i)) {
 			return i
 		}
@@ -194,8 +194,7 @@ func (list List[T]) Last() T {
 
 // Insert inserts an element at specified index.
 func (list List[T]) Insert(item T, index int) {
-	list._ilist._arr = append(list._ilist._arr[:index+1], list._ilist._arr[index:]...)
-	list._ilist._arr[index] = item
+	list._ilist._arr = slices.Insert(list._ilist._arr, index, item)
 }
 
 func (list *List[T]) GetSeq() iter.Seq[T] {
