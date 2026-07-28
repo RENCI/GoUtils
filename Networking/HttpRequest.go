@@ -67,7 +67,7 @@ func HttpDelete(url string) (int, []byte, error) {
 	return resp.StatusCode, body, nil
 }
 
-func HttpPutWithStatus(url string, body map[string]any) (int, []byte, error) {
+func HttpPut(url string, body map[string]any) (int, []byte, error) {
 	client := GetHttpClientWithNoTLSCheck()
 	jsonValue, err := json.Marshal(body)
 	if err != nil {
