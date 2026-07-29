@@ -5,8 +5,30 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"io"
+	"net"
 	"net/http"
+	"time"
 )
+
+// One transport for the whole process. Its connection pool is the thing that
+// must be shared — a per-call transport leaks idle sockets and their goroutines.
+var client = &http.Client{
+	Timeout: 5 * time.Minute, // whole request, including body read
+	Transport: &http.Transport{
+		Proxy: http.ProxyFromEnvironment,
+		DialContext: (&net.Dialer{
+			Timeout:   10 * time.Second,
+			KeepAlive: 30 * time.Second,
+		}).DialContext,
+		ForceAttemptHTTP2:     true,
+		MaxIdleConns:          100,
+		MaxIdleConnsPerHost:   32, // default is 2 — far too low for one-host workloads
+		IdleConnTimeout:       90 * time.Second,
+		TLSHandshakeTimeout:   10 * time.Second,
+		ExpectContinueTimeout: 1 * time.Second,
+		TLSClientConfig:       &tls.Config{InsecureSkipVerify: true},
+	},
+}
 
 func HttpGet(url string) (int, []byte, error) {
 	client := GetHttpClientWithNoTLSCheck()
@@ -94,9 +116,5 @@ func HttpPut(url string, body map[string]any) (int, []byte, error) {
 }
 
 func GetHttpClientWithNoTLSCheck() *http.Client {
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}
-	client := &http.Client{Transport: tr}
 	return client
 }
